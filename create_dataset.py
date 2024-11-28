@@ -1,5 +1,4 @@
 import cv2
-import os
 import time
 import json
 
@@ -15,7 +14,7 @@ def show_img(img):
 
 def get_user_name():
     """
-    Avoir le user name du sample vérifier qu'il n'est pas déja utilisé et sauver dans fichier le fichier
+    Avoir le user name du sample vérifier qu'il n'est pas déja utilisé et sauver dans le fichier
     """
 
     user_name = input('\n Enter user name : ')
@@ -43,7 +42,7 @@ haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 # Initialisation de la caméra
 cam = cv2.VideoCapture(0)
 
-# Avoir user name du sample et sauver dans fichier de nom
+# Avoir user name du sample et sauver dans le fichier de nom
 user_name = get_user_name()
 
 # Affichage camera
