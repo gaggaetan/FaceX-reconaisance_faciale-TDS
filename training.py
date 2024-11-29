@@ -36,6 +36,6 @@ recognizer.train(faces, np.array(ids))
 
 # Sauve le modèle dans trainer/trainer.yml
 recognizer.write('trainer/trainer.yml')
-
+pipi
 # Imprime le nombre de visages entrainés
 print("\n [INFO] {0} visages entrainés.".format(len(np.unique(ids))))
