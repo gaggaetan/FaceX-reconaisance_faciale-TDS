@@ -15,7 +15,7 @@ cam = cv2.VideoCapture(0)
 get_user_name()
 
 # Affichage camera
-ret, img = cam_read(cam=cam)
+ret, img = cam_read(cam)
 show_img(img)
 
 # Lancement des photos
@@ -36,7 +36,7 @@ id = find_next_id()
 while(True):
 
     # Récuperation image 
-    ret, img = cam_read(cam=cam)
+    ret, img = cam_read(cam)
 
     if cv2.waitKey(1) & 0xff == 27 :
         break
@@ -45,7 +45,7 @@ while(True):
     grayIMG = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Détection image
-    faces = haar_cascade.detectMultiScale(grayIMG, 1.26, 5)
+    faces = haar_cascade.detectMultiScale(grayIMG, 1.1, 5)
 
     # Rectangle
     for (x,y,w,h) in faces:

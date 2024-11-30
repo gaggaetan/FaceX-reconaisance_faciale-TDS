@@ -8,11 +8,11 @@ def write_on_img (img, text, H, L):
     return img
 
 
-def cam_read(cam) :
+def cam_read(camera) :
     """
     Lis la camera et remvois l'image
     """
-    ret, img = cam.read()
+    ret, img = camera.read()
     return ret, img
 
 def show_img(img):
