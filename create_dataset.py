@@ -1,8 +1,27 @@
 import cv2
 import time
 import json
+import os
 
 NBR_SAMPLE = 30
+
+
+def find_next_id():
+    """
+    Trouve le prochain id de la personne suivante 
+    """
+    last_id = 0
+    path = 'data'
+    imagePaths = [os.path.join(path,f) for f in os.listdir(path)]
+
+    for imagePath in imagePaths :
+        id = int(os.path.split(imagePath)[-1].split(".")[1])
+        if id > last_id :
+            last_id = id
+    return last_id + 1
+
+
+
 
 def get_cam() :
     ret, img = cam.read()
@@ -14,25 +33,28 @@ def show_img(img):
 
 def get_user_name():
     """
-    Avoir le user name du sample vérifier qu'il n'est pas déja utilisé et sauver dans le fichier
+    Avoir le user name du sample vérifier qu'il n'est pas déja utilisé. Ensuite le sauver dans le fichier
     """
 
-    user_name = input('\n Enter user name : ')
+    with open('users_names.json', 'r') as file:
+        users_names = json.load(file)
 
-    while True :
-        with open('users_names.json', 'r') as file:
-            users_names = json.load(file)
+    while True:
+            user_name = input('\nEnter user name: ').strip()
+
+            if user_name not in users_names["users_names"]:
+                # Ajouter le nouveau nom
+                users_names["users_names"].append(user_name)
+
+                # Sauvegarder le fichier
+                with open('users_names.json', 'w') as json_file:
+                    json.dump(users_names, json_file, indent=4)
+
+                print("User ajouté :", user_name)
+                break
+            else:
+                print("Ce nom existe déjà. Veuillez essayer un autre.")
         
-        if user_name not in users_names :
-
-            users_names["users_names"].append(user_name)
-
-            # ajout du nom dans le json
-            with open('users_names.json', 'w') as json_file:
-                json.dump(users_names, json_file)
-
-            print("user : ", user_name)
-            break
     return user_name
     
 
@@ -43,7 +65,7 @@ haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 cam = cv2.VideoCapture(0)
 
 # Avoir user name du sample et sauver dans le fichier de nom
-user_name = get_user_name()
+get_user_name()
 
 # Affichage camera
 ret, img = get_cam()
@@ -60,6 +82,8 @@ time.sleep(1)
 
 nbr_photos = 0
 prev_time = time.time()
+id = find_next_id()
+
 
 # Récupere les Samples
 while(True):
@@ -83,7 +107,7 @@ while(True):
         nbr_photos += 1
 
         # Sauve l'image
-        cv2.imwrite("data/user." + str(user_name) + '.' + str(nbr_photos) + ".jpg", grayIMG[y:y+h,x:x+w])
+        cv2.imwrite("data/user." + str(id) + '.' + str(nbr_photos) + ".jpg", grayIMG[y:y+h,x:x+w])
 
         print("Photo ", nbr_photos)
 
