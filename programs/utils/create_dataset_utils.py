@@ -21,7 +21,7 @@ def get_user_name():
     Avoir le user name du sample vérifier qu'il n'est pas déja utilisé. Ensuite le sauver dans le fichier
     """
 
-    with open('users_names.json', 'r') as file:
+    with open('programs\\utils\\users_names.json', 'r') as file:
         users_names = json.load(file)
 
     while True:
@@ -32,7 +32,7 @@ def get_user_name():
                 users_names["users_names"].append(user_name)
 
                 # Sauvegarder le fichier
-                with open('users_names.json', 'w') as json_file:
+                with open('programs\\utils\\users_names.json', 'w') as json_file:
                     json.dump(users_names, json_file, indent=4)
 
                 print("User ajouté :", user_name)

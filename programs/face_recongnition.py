@@ -1,23 +1,28 @@
 import cv2
 import json
+import time
 from utils.cam_utils import *
 from utils.face_recongnition import *
 
 
 # initialiser le modele avec les élements entrainer
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-recognizer.read('trainer/trainer.yml') 
-cascadePath = "haarcascade_frontalface_default.xml"
+recognizer.read('programs\\trainer\\trainer.yml') 
+cascadePath = "programs\\utils\\haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascadePath);
 
 
 # Récuperer tous les users du fichier 'users_names.json'
-with open('users_names.json', 'r') as file:
+with open('programs\\utils\\users_names.json', 'r') as file:
     users_names = json.load(file)["users_names"]
-print("All users are : ", users_names)
+
+    if len(users_names) == 0 :
+        print("No users found")
+        quit()
+    print("All users are : ", users_names)
 
 cam = cv2.VideoCapture(0)
-
+prev_time = time.time()
 
 
 while True:
@@ -44,6 +49,13 @@ while True:
         write_on_img(img, str(id), x + 5, y - 5)
         write_on_img(img, str(confidence), x + 5, y + h - 5)
 
+
+
+    # Afficher le FPS sur l'image
+    curr_time = time.time()
+    fps = 1 / (curr_time - prev_time)
+    prev_time = curr_time
+    img = write_on_img(img, f"FPS: {fps:.2f}", 10, 30)
 
     show_img(img)
 

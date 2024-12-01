@@ -3,10 +3,12 @@ import time
 from utils.cam_utils import *
 from utils.create_dataset_utils import *
 
+
+
 NBR_SAMPLE = 30
 
 # Reconaisance faciale xml file
-haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+haar_cascade = cv2.CascadeClassifier('programs\\utils\\haarcascade_frontalface_default.xml')
 
 # Initialisation de la caméra
 cam = cv2.VideoCapture(0)
@@ -45,7 +47,7 @@ while(True):
     grayIMG = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Détection image
-    faces = haar_cascade.detectMultiScale(grayIMG, 1.1, 5)
+    faces = haar_cascade.detectMultiScale(grayIMG, 1.2, 5)
 
     # Rectangle
     for (x,y,w,h) in faces:
