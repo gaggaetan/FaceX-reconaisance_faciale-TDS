@@ -1,4 +1,5 @@
 import cv2
+import win32gui,win32con
 
 def write_on_img (img, text, H, L):
     """
@@ -19,4 +20,9 @@ def show_img(img):
     """
     Affiche l'image
     """
-    cv2.imshow('image', img)
+    cv2.imshow('FaceX-reconnaissance_faciale', img)
+
+    # Change icone de la fenetre
+    hwnd = win32gui.FindWindow(None, "FaceX-reconnaissance_faciale")
+    icon_path = "./programs/utils/faceX_logo.ico"
+    win32gui.SendMessage(hwnd, win32con.WM_SETICON, win32con.ICON_BIG, win32gui.LoadImage(None, icon_path, win32con.IMAGE_ICON, 0, 0, win32con.LR_LOADFROMFILE | win32con.LR_DEFAULTSIZE))
