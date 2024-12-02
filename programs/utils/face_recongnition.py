@@ -1,6 +1,6 @@
 def predict_user(recognizer, users, img, y, h, x, w ):
     """
-    Prédit à quel utilisateurs pourrait etre ce visage et retourne ID de celui ci et sa confidence de son choix
+    Prédit à quel utilisateurs pourrait etre ce visage et retourne ID de celui ci et la confiance de son choix
     """
 
     id, confidence = recognizer.predict(img[y:y + h, x:x + w])
